@@ -1,0 +1,33 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.svm import SVR
+
+#     bagian 1
+#membaca dataset dan mengubahnya menjadi dataframe
+data = pd.read_csv('Salary_Data.csv')
+
+#mengecek nilai atribut apakah ad yang hilang
+data.info()
+
+#     bagian 2
+#menampilkan datafrmae
+data.head()
+
+#     bagian 3
+#memisahkan atribut dan label
+x = data['YearsExperience']
+y = data['Salary']
+
+#mengubah bentuk atribut
+x = x[:,np.newaxis]
+
+#membangun model dengan parameter C, Gamma, dan kernel
+model = SVR(C=1000, gamma=0.05, kernel='rbf')
+
+#melatih model dengan fingsi fit
+model.fit(x,y)
+
+#menvisualisasikan model
+plt.scatter(x,y)
+plt.plot(x, model.predict(x))

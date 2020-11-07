@@ -1,0 +1,38 @@
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn import  tree
+from sklearn.decomposition import  PCA
+
+#bagian 1
+iris = datasets.load_iris()
+atribut = iris.data
+label = iris.target
+
+#bagi dataset menjadi train set dan test set
+x_train, x_test, y_train, y_test = train_test_split(
+    atribut, label, test_size=0.2)
+
+#bagian2
+decision_tree = tree.DecisionTreeClassifier()
+model_pertama = decision_tree.fit(x_train, y_train)
+model_pertama.score(x_test, y_test)
+
+#bagian 3
+#membuat objek PCA dengan 4 principal component
+pca = PCA(n_components=4)
+
+#memngaplikasikan PCA pada dataset
+pca_attributes = pca.fit_transform(x_train)
+
+#melihat variance dari setiap atribut
+pca.explained_variance_ratio_
+
+#bagian 4
+#PCA dengan 2 principal components
+pca = PCA(n_components = 2)
+x_train_pca = pca.fit_transform(x_train)
+x_test_pca = pca.fit_transform(x_test)
+
+#uji akurasi classifier
+model2 = decision_tree.fit(x_train_pca, y_train)
+model2.score(x_test_pca, y_test)
