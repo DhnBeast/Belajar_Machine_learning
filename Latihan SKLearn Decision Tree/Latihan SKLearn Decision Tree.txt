@@ -1,0 +1,35 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.datasets import load_iris
+from sklearn.tree import export_graphviz
+
+#membaca file Iris.csv
+iris = pd.read_csv('Iris.csv')
+
+# melihat informasi dataset pada 5 baris pertama
+iris.head()
+
+#menghilangkan kolom yang tidak penting
+iris.drop('Id',axis=1,inplace=True)
+
+#memisahkan atribut dan label
+x = iris[['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm' ]]
+y = iris['Species']
+
+#membuat model Decision Tree
+tree_model = DecisionTreeClassifier()
+
+#melakukan pelatihan model terhadap data
+tree_model.fit(x,y)
+
+# prediksi model dengan tree_model.predict([[SepalLength, SepalWidth, PetalLength, PetalWidth]])
+tree_model.predict([[6.2, 3.4, 5.4, 2.3]])
+
+export_graphviz(
+    tree_model,
+    out_file = "iris_tree.dot",
+    feature_names = ['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm'],
+    class_names = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica'],
+    rounded = True,
+    filled = True
+)

@@ -1,0 +1,36 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn import  linear_model
+from sklearn.preprocessing import StandardScaler
+
+#membca dataset dan mengubahnya menjdai data frame
+data = pd.read_csv('Social_Network_Ads.csv')
+df = pd.read_csv('Social_Network_Ads.csv')
+
+#menampilkan data set
+df.head()
+
+#melihat nilai pada atribut
+df.info()
+
+#drop kolom yang tidak diperlukan
+data = df.drop(columns=['User ID'])
+
+#jalankan prose one-hot encoding dengan pd.get_dummies()
+data = pd.get_dummies(data)
+data
+
+#pisahkan atribut dan label
+predictions = ['Age' , 'EstimatedSalary' , 'Gender_Female' , 'Gender_Male']
+x = data[predictions]
+y = data['Purchased']
+
+#bagi data menjadi train dan test untuk setiap atribut dan label
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random_state=42)
+
+#latih model dengan fungsi fit
+model = linear_model.LogisticRegression()
+model.fit(x_train, y_train)
+
+#uji akurasi model
+model.score(x_test, y_test)
